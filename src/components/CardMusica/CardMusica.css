@@ -1,0 +1,64 @@
+.card-musica {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--cor-fundo-card);
+  border: 1px solid var(--cor-borda);
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  transition: border-color 0.15s ease;
+}
+
+.card-musica:hover {
+  border-color: var(--cor-destaque);
+}
+
+.card-musica__capa {
+  width: 52px;
+  height: 52px;
+  border-radius: 6px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.card-musica__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.card-musica__titulo {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-musica__artista {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: var(--cor-texto-secundario);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-musica__botao-adicionar {
+  flex-shrink: 0;
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--cor-destaque);
+  background: transparent;
+  color: var(--cor-destaque);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.card-musica__botao-adicionar:hover {
+  background: var(--cor-destaque);
+  color: var(--cor-fundo);
+}

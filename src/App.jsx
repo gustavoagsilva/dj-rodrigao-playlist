@@ -1,5 +1,6 @@
 import { useState } from "react";
-import BuscaMusica from "./components/BuscaMusica";
+import BuscaMusica from "./components/BuscaMusica/BuscaMusica";
+import MinhaPlaylist from "./components/MinhaPlaylist/MinhaPlaylist";
 
 function App() {
   const [playlist, setPlayList] = useState([]);
@@ -12,6 +13,7 @@ function App() {
     <div>
       <h1>Dj Rodrigão</h1>
       <BuscaMusica playlist={playlist} onAdd={addInPlaylist} />
+      <MinhaPlaylist playlist={playlist} />
     </div>
   );
 }

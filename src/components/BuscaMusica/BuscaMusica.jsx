@@ -1,3 +1,4 @@
+import "./BuscaMusica.css";
 import { useState } from "react";
 
 function BuscaMusica({ playlist, onAdd }) {
@@ -23,21 +24,34 @@ function BuscaMusica({ playlist, onAdd }) {
   }
 
   return (
-    <div>
-      <form onSubmit={buscarMusicas}>
+    <div className="busca-musica">
+      <form className="busca-musica__form" onSubmit={buscarMusicas}>
         <input
+          className="busca-musica__input"
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
           type="text"
           placeholder="Digite o nome da música ou do artista"
         />
-        <button type="submit">Buscar</button>
+        <button className="busca-musica__botao-buscar" type="submit">
+          Buscar
+        </button>
         {searchResults.map((music) => (
-          <div key={music.trackId}>
-            <p>{music.trackName}</p>
-            <p>{music.artistName}</p>
-            <img src={music.artworkUrl100} alt="Capa da música" />
-            <button type="button" onClick={() => onAdd(music)}>
+          <div className="card-musica" key={music.trackId}>
+            <img
+              className="card-musica__capa"
+              src={music.artworkUrl100}
+              alt="Capa da música"
+            />
+            <div className="card-musica__info">
+              <p className="card-musica__titulo">{music.trackName}</p>
+              <p className="card-musica__artista">{music.artistName}</p>
+            </div>
+            <button
+              className="card-musica__botao-adicionar"
+              type="button"
+              onClick={() => onAdd(music)}
+            >
               Adicionar
             </button>
           </div>

@@ -1,0 +1,51 @@
+.busca-musica {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+.busca-musica__form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.busca-musica__input {
+  flex: 1;
+  min-width: 200px;
+  padding: 12px 14px;
+  border-radius: var(--radius-padrao);
+  border: 1px solid #333;
+  background: var(--cor-fundo-card);
+  color: var(--cor-texto);
+  font-size: 14px;
+}
+
+.busca-musica__input::placeholder {
+  color: #888;
+}
+
+.busca-musica__input:focus {
+  outline: none;
+  border-color: var(--cor-destaque);
+}
+
+.busca-musica__botao-buscar {
+  padding: 12px 20px;
+  border-radius: var(--radius-padrao);
+  border: none;
+  background: var(--cor-destaque);
+  color: var(--cor-fundo);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    background 0.15s ease;
+}
+
+.busca-musica__botao-buscar:hover {
+  background: var(--cor-destaque-hover);
+  transform: translateY(-1px);
+}
