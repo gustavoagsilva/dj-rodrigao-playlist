@@ -1,4 +1,4 @@
-function MinhaPlaylist({ playlist }) {
+function MinhaPlaylist({ playlist, onRemove }) {
   return (
     <div>
       {playlist.map((music) => (
@@ -14,7 +14,11 @@ function MinhaPlaylist({ playlist }) {
             <p className="card-musica__artista">{music.artistName}</p>
           </div>
 
-          <button className="remover-musica__botao-remover" type="button">
+          <button
+            className="remover-musica__botao-remover"
+            type="button"
+            onClick={() => onRemove(music)}
+          >
             Remover
           </button>
         </div>

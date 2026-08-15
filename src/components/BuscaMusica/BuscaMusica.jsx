@@ -14,7 +14,7 @@ function BuscaMusica({ playlist, onAdd }) {
         `https://itunes.apple.com/search?term=${inputText}&media=music`,
       );
       const data = await answer.json();
-      console.log(data);
+      // console.log(data);
       setSearchResults(data.results);
     } catch (err) {
       console.log(err);
@@ -26,6 +26,7 @@ function BuscaMusica({ playlist, onAdd }) {
   return (
     <div className="busca-musica">
       <form className="busca-musica__form" onSubmit={buscarMusicas}>
+        {isLoading && <p>Buscando...</p>}
         <input
           className="busca-musica__input"
           value={inputText}
@@ -36,26 +37,33 @@ function BuscaMusica({ playlist, onAdd }) {
         <button className="busca-musica__botao-buscar" type="submit">
           Buscar
         </button>
-        {searchResults.map((music) => (
-          <div className="card-musica" key={music.trackId}>
-            <img
-              className="card-musica__capa"
-              src={music.artworkUrl100}
-              alt="Capa da música"
-            />
-            <div className="card-musica__info">
-              <p className="card-musica__titulo">{music.trackName}</p>
-              <p className="card-musica__artista">{music.artistName}</p>
+        {searchResults.map((music) => {
+          const exists = playlist.some(
+            (item) => item.trackId === music.trackId,
+          );
+          const textButton = exists ? "Música já adicionada" : "Adicionar";
+
+          return (
+            <div className="card-musica" key={music.trackId}>
+              <img
+                className="card-musica__capa"
+                src={music.artworkUrl100}
+                alt="Capa da música"
+              />
+              <div className="card-musica__info">
+                <p className="card-musica__titulo">{music.trackName}</p>
+                <p className="card-musica__artista">{music.artistName}</p>
+              </div>
+              <button
+                className="card-musica__botao-adicionar"
+                type="button"
+                onClick={() => onAdd(music)}
+              >
+                {textButton}
+              </button>
             </div>
-            <button
-              className="card-musica__botao-adicionar"
-              type="button"
-              onClick={() => onAdd(music)}
-            >
-              Adicionar
-            </button>
-          </div>
-        ))}
+          );
+        })}
       </form>
     </div>
   );
