@@ -53,6 +53,14 @@ function BuscaMusica({ playlist, onAdd }) {
               <div className="card-musica__info">
                 <p className="card-musica__titulo">{music.trackName}</p>
                 <p className="card-musica__artista">{music.artistName}</p>
+                <a
+                  className="card-musica__spotify"
+                  href={`https://open.spotify.com/search/${encodeURIComponent(music.trackName + " " + music.artistName)}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Abrir no Spotify
+                </a>
               </div>
               <button
                 className="card-musica__botao-adicionar"
