@@ -1,43 +1,57 @@
 .card-musica {
+  min-width: 0;
   display: flex;
-  align-items: center;
-  gap: 12px;
+  flex-direction: column;
   background: var(--cor-fundo-card);
   border: 1px solid var(--cor-borda);
-  border-radius: 10px;
-  padding: 10px 12px;
-  margin-bottom: 10px;
-  transition: border-color 0.15s ease;
+  border-radius: var(--radius-padrao);
+  padding: 14px;
+  transition:
+    border-color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.card-musica__audio {
+  width: 100%;
+  min-width: 0;
+  margin-bottom: 12px;
+}
+
+.card-musica__aviso {
+  color: var(--cor-texto-secundario);
+  font-size: 12px;
+  margin: 0 0 12px;
 }
 
 .card-musica:hover {
   border-color: var(--cor-destaque);
+  transform: translateY(-2px);
 }
 
 .card-musica__capa {
-  width: 52px;
-  height: 52px;
-  border-radius: 6px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius-pequeno);
   object-fit: cover;
-  flex-shrink: 0;
+  margin-bottom: 10px;
 }
 
 .card-musica__info {
-  flex: 1;
-  min-width: 0;
+  margin-bottom: 10px;
 }
 
 .card-musica__titulo {
   margin: 0;
   font-size: 14px;
   font-weight: 600;
+  color: var(--cor-texto);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .card-musica__artista {
-  margin: 2px 0 0;
+  margin: 4px 0 0;
   font-size: 12px;
   color: var(--cor-texto-secundario);
   white-space: nowrap;
@@ -45,14 +59,26 @@
   text-overflow: ellipsis;
 }
 
+.card-musica__spotify {
+  font-size: 12px;
+  color: var(--cor-destaque);
+  text-decoration: none;
+  margin-top: 6px;
+  display: inline-block;
+}
+
+.card-musica__spotify:hover {
+  text-decoration: underline;
+}
+
 .card-musica__botao-adicionar {
-  flex-shrink: 0;
-  padding: 8px 14px;
-  border-radius: 6px;
+  margin-top: auto;
+  padding: 8px 12px;
+  border-radius: var(--radius-pequeno);
   border: 1px solid var(--cor-destaque);
   background: transparent;
   color: var(--cor-destaque);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.15s ease;
@@ -61,4 +87,38 @@
 .card-musica__botao-adicionar:hover {
   background: var(--cor-destaque);
   color: var(--cor-fundo);
+}
+
+@media (max-width: 1023px) {
+  .card-musica__botao-adicionar {
+    min-height: 44px;
+  }
+}
+
+/* Cards compactos na busca em celulares. */
+@media (max-width: 599px) {
+  .busca-musica .card-musica {
+    display: grid;
+    grid-template-columns: 72px minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .busca-musica .card-musica__capa {
+    width: 72px;
+    height: 72px;
+    margin-bottom: 0;
+  }
+
+  .busca-musica .card-musica__info {
+    min-width: 0;
+    margin-bottom: 0;
+    align-self: center;
+  }
+
+  .busca-musica .card-musica__audio,
+  .busca-musica .card-musica__aviso,
+  .busca-musica .card-musica__botao-adicionar {
+    grid-column: 1 / -1;
+    margin: 0;
+  }
 }

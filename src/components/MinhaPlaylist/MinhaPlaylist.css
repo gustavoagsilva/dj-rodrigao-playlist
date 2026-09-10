@@ -1,0 +1,225 @@
+.minha-playlist {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: var(--cor-fundo-elevado);
+  border-top: 1px solid var(--cor-borda);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+  z-index: 100;
+  max-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Resumo (estado fechado) */
+.minha-playlist__resumo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 14px 20px;
+  font-family: var(--fonte-corpo);
+  color: var(--cor-texto);
+  font-size: 14px;
+}
+
+.minha-playlist__resumo p {
+  margin: 0;
+}
+
+/* Conteúdo expandido */
+.minha-playlist__conteudo {
+  display: none;
+  width: 100%;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 16px 20px 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.minha-playlist--aberta .minha-playlist__conteudo {
+  display: block;
+}
+
+.minha-playlist__nome-festa {
+  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+  border-radius: var(--radius-padrao);
+  border: 1px solid var(--cor-borda);
+  background: var(--cor-fundo-card);
+  color: var(--cor-texto);
+  font-family: var(--fonte-corpo);
+  font-size: 14px;
+}
+
+.minha-playlist__nome-festa::placeholder {
+  color: var(--cor-texto-secundario);
+}
+
+.minha-playlist__nome-festa:focus {
+  outline: none;
+  border-color: var(--cor-destaque);
+}
+
+/* Cada item da lista (formato horizontal, diferente do grid de busca) */
+.minha-playlist .card-musica {
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+}
+
+.minha-playlist .card-musica__capa {
+  width: 48px;
+  height: 48px;
+  aspect-ratio: unset;
+  margin-bottom: 0;
+  flex-shrink: 0;
+}
+
+.minha-playlist .card-musica__info {
+  flex: 1;
+  min-width: 0;
+  margin-bottom: 0;
+}
+
+/* Botão de abrir/fechar a barra */
+.minha-playlist__botao-toggle {
+  padding: 8px 16px;
+  border-radius: var(--radius-pequeno);
+  border: 1px solid var(--cor-destaque);
+  background: transparent;
+  color: var(--cor-destaque);
+  font-family: var(--fonte-corpo);
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.minha-playlist__botao-toggle:hover {
+  background: var(--cor-destaque);
+  color: var(--cor-fundo);
+}
+
+/* Botão de remover música */
+.remover-musica__botao-remover {
+  flex-shrink: 0;
+  padding: 6px 12px;
+  border-radius: var(--radius-pequeno);
+  border: 1px solid var(--cor-borda);
+  background: transparent;
+  color: var(--cor-texto-secundario);
+  font-family: var(--fonte-corpo);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.remover-musica__botao-remover:hover {
+  border-color: #e05555;
+  color: #e05555;
+}
+
+@media (max-width: 1023px) {
+  .minha-playlist {
+    max-height: 70dvh;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  .minha-playlist--aberta .minha-playlist__conteudo {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .minha-playlist__nome-festa,
+  .minha-playlist__rodape {
+    flex-shrink: 0;
+  }
+
+  .minha-playlist__nome-festa {
+    font-size: 16px;
+  }
+
+  .minha-playlist__musicas {
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+  }
+
+  .minha-playlist__botao-toggle,
+  .remover-musica__botao-remover {
+    min-height: 44px;
+  }
+}
+
+/* Mais espaço para a lista quando a altura disponível for pequena. */
+@media (max-width: 1023px) and (max-height: 500px) {
+  .minha-playlist {
+    max-height: 95vh;
+    max-height: 95dvh;
+  }
+
+  .minha-playlist__resumo {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  .minha-playlist__conteudo {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .minha-playlist {
+    position: sticky;
+    top: 24px;
+    bottom: auto;
+    left: auto;
+    /* Reserva espaço para o cabeçalho e mantém o envio dentro da tela. */
+    max-height: calc(100vh - 200px);
+    max-height: calc(100dvh - 200px);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--radius-padrao);
+    z-index: 1;
+    min-width: 0;
+  }
+
+  .minha-playlist__botao-toggle {
+    display: none;
+  }
+
+  .minha-playlist .minha-playlist__conteudo {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .minha-playlist__resumo,
+  .minha-playlist__conteudo {
+    max-width: none;
+  }
+
+  .minha-playlist__nome-festa,
+  .minha-playlist__rodape {
+    flex-shrink: 0;
+  }
+
+  .minha-playlist__musicas {
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+  }
+}

@@ -1,29 +1,29 @@
 .busca-musica {
-  max-width: 480px;
-  margin: 0 auto;
-  padding: 24px 16px;
+  padding: 0 16px;
 }
 
 .busca-musica__form {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-bottom: 20px;
+  max-width: 600px;
+  margin: 0 auto 32px;
 }
 
 .busca-musica__input {
   flex: 1;
   min-width: 200px;
-  padding: 12px 14px;
+  padding: 14px 16px;
   border-radius: var(--radius-padrao);
-  border: 1px solid #333;
+  border: 1px solid var(--cor-borda);
   background: var(--cor-fundo-card);
   color: var(--cor-texto);
-  font-size: 14px;
+  font-family: var(--fonte-corpo);
+  font-size: 15px;
 }
 
 .busca-musica__input::placeholder {
-  color: #888;
+  color: var(--cor-texto-secundario);
 }
 
 .busca-musica__input:focus {
@@ -32,20 +32,62 @@
 }
 
 .busca-musica__botao-buscar {
-  padding: 12px 20px;
+  padding: 14px 24px;
   border-radius: var(--radius-padrao);
   border: none;
   background: var(--cor-destaque);
-  color: var(--cor-fundo);
-  font-weight: 600;
-  font-size: 14px;
+  color: #16171a;
+  font-family: var(--fonte-corpo);
+  font-weight: 700;
+  font-size: 15px;
   cursor: pointer;
   transition:
-    transform 0.15s ease,
-    background 0.15s ease;
+    background 0.15s ease,
+    transform 0.1s ease;
 }
 
 .busca-musica__botao-buscar:hover {
   background: var(--cor-destaque-hover);
   transform: translateY(-1px);
+}
+
+.busca-musica__status {
+  max-width: 600px;
+  margin: 0 auto 16px;
+  text-align: center;
+  color: var(--cor-texto-secundario);
+  font-size: 14px;
+}
+
+.busca-musica__resultados {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 14px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+@media (max-width: 1023px) {
+  .busca-musica__input {
+    font-size: 16px;
+  }
+
+  .busca-musica__botao-buscar {
+    /* Cresce até ocupar a linha quando não couber ao lado do campo. */
+    flex: 1 0 100px;
+    min-height: 44px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .busca-musica {
+    padding: 0;
+    min-width: 0;
+  }
+
+  .busca-musica__form,
+  .busca-musica__status,
+  .busca-musica__resultados {
+    max-width: none;
+  }
 }

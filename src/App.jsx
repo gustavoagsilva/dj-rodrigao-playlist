@@ -1,27 +1,46 @@
 import { useState } from "react";
 import BuscaMusica from "./components/BuscaMusica/BuscaMusica";
 import MinhaPlaylist from "./components/MinhaPlaylist/MinhaPlaylist";
+import "./App.css";
 
 function App() {
-  const [playlist, setPlayList] = useState([]);
+  const [festa, setFesta] = useState({ playlist: [], name: "" });
+  const { playlist, name } = festa;
+
+  function setName(name) {
+    setFesta((current) => ({ ...current, name }));
+  }
 
   function addInPlaylist(music) {
-    //código para adicionar uma música na playlist
-    const exists = playlist.some((item) => {
-      return item.trackId === music.trackId;
+    setFesta((current) => {
+      const exists = current.playlist.some(
+        (item) => item.trackId === music.trackId,
+      );
+      if (exists) return current;
+
+      return { ...current, playlist: [...current.playlist, music] };
     });
-    !exists && setPlayList([...playlist, music]);
   }
 
   function removeFromPlayList(music) {
-    //código para remover uma música da playlist
-    setPlayList(playlist.filter((item) => music.trackId !== item.trackId));
+    setFesta((current) => ({
+      ...current,
+      playlist: current.playlist.filter((item) => music.trackId !== item.trackId),
+    }));
   }
   return (
-    <div>
-      <h1>Dj Rodrigão</h1>
+    <div className="app">
+      <header className="app__header">
+        <h1 className="app__titulo">Dj Rodrigão</h1>
+        <p className="app__subtitulo">Monte a playlist da sua festa</p>
+      </header>
       <BuscaMusica playlist={playlist} onAdd={addInPlaylist} />
-      <MinhaPlaylist playlist={playlist} onRemove={removeFromPlayList} />
+      <MinhaPlaylist
+        playlist={playlist}
+        onRemove={removeFromPlayList}
+        name={name}
+        setName={setName}
+      />
     </div>
   );
 }
