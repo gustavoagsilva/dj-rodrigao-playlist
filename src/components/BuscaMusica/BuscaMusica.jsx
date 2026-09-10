@@ -1,78 +1,119 @@
-import "./BuscaMusica.css";
-import { useState } from "react";
+﻿import "./BuscaMusica.css";
+import CardMusica from "../CardMusica/CardMusica";
+import { useEffect, useRef, useState } from "react";
 
 function BuscaMusica({ playlist, onAdd }) {
   const [inputText, setInputText] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [status, setStatus] = useState("");
+  const requestRef = useRef(null);
+  const audioRef = useRef(null);
 
-  async function buscarMusicas(e) {
-    e.preventDefault();
+  useEffect(() => {
+    return () => {
+      requestRef.current?.abort();
+      audioRef.current?.pause();
+    };
+  }, []);
+
+  function tocarPrevia(audio) {
+    if (audioRef.current && audioRef.current !== audio) {
+      audioRef.current.pause();
+    }
+    audioRef.current = audio;
+  }
+
+  async function buscarMusicas(event) {
+    event.preventDefault();
+    // Cancela a busca anterior e interrompe a prévia dos resultados antigos.
+    requestRef.current?.abort();
+    audioRef.current?.pause();
+    audioRef.current = null;
+    const controller = new AbortController();
+    requestRef.current = controller;
+    const term = inputText.trim();
+    setSearchResults([]);
+    setStatus("");
+
+    if (!term) {
+      setIsLoading(false);
+      setStatus("Digite o nome de uma música ou artista.");
+      return;
+    }
+
     setIsLoading(true);
+    let timedOut = false;
+    const timeout = setTimeout(() => {
+      timedOut = true;
+      controller.abort();
+    }, 20000);
+
     try {
       const answer = await fetch(
-        `https://itunes.apple.com/search?term=${inputText}&media=music`,
+        `https://itunes.apple.com/search?term=${encodeURIComponent(term)}&media=music&entity=song`,
+        { signal: controller.signal },
       );
+      if (!answer.ok) throw new Error("Falha na busca");
       const data = await answer.json();
-      // console.log(data);
-      setSearchResults(data.results);
-    } catch (err) {
-      console.log(err);
+      if (!Array.isArray(data.results)) throw new Error("Resposta inválida");
+      // Mesmo se uma resposta antiga chegar, somente a busca atual pode atualizar a tela.
+      if (requestRef.current !== controller || controller.signal.aborted) return;
+      const results = data.results.filter(
+        (music) =>
+          music &&
+          typeof music.trackId === "number" &&
+          typeof music.trackName === "string" &&
+          typeof music.artistName === "string",
+      );
+      setSearchResults(results);
+      if (results.length === 0) {
+        setStatus("Nenhuma música encontrada. Tente outro nome ou artista.");
+      }
+    } catch {
+      if (requestRef.current !== controller) return;
+      if (timedOut) {
+        setStatus("A busca demorou demais. Tente novamente.");
+      } else if (!controller.signal.aborted) {
+        setStatus(
+          "Não foi possível buscar as músicas. Verifique sua conexão e tente novamente.",
+        );
+      }
     } finally {
-      setIsLoading(false);
+      clearTimeout(timeout);
+      if (requestRef.current === controller) setIsLoading(false);
     }
   }
 
   return (
     <div className="busca-musica">
       <form className="busca-musica__form" onSubmit={buscarMusicas}>
-        {isLoading && <p>Buscando...</p>}
         <input
           className="busca-musica__input"
           value={inputText}
-          onChange={(e) => setInputText(e.target.value)}
+          onChange={(event) => setInputText(event.target.value)}
           type="text"
+          aria-label="Nome da música ou do artista"
           placeholder="Digite o nome da música ou do artista"
         />
         <button className="busca-musica__botao-buscar" type="submit">
           Buscar
         </button>
-        {searchResults.map((music) => {
-          const exists = playlist.some(
-            (item) => item.trackId === music.trackId,
-          );
-          const textButton = exists ? "Música já adicionada" : "Adicionar";
-
-          return (
-            <div className="card-musica" key={music.trackId}>
-              <img
-                className="card-musica__capa"
-                src={music.artworkUrl100}
-                alt="Capa da música"
-              />
-              <div className="card-musica__info">
-                <p className="card-musica__titulo">{music.trackName}</p>
-                <p className="card-musica__artista">{music.artistName}</p>
-                <a
-                  className="card-musica__spotify"
-                  href={`https://open.spotify.com/search/${encodeURIComponent(music.trackName + " " + music.artistName)}`}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Abrir no Spotify
-                </a>
-              </div>
-              <button
-                className="card-musica__botao-adicionar"
-                type="button"
-                onClick={() => onAdd(music)}
-              >
-                {textButton}
-              </button>
-            </div>
-          );
-        })}
       </form>
+      <p className="busca-musica__status" role="status" aria-live="polite">
+        {isLoading ? "Buscando..." : status}
+      </p>
+      <div className="busca-musica__resultados" aria-busy={isLoading}>
+        {searchResults.map((music) => (
+          <CardMusica
+            key={music.trackId}
+            music={music}
+            added={playlist.some((item) => item.trackId === music.trackId)}
+            onAdd={onAdd}
+            onPlay={tocarPrevia}
+          />
+        ))}
+      </div>
     </div>
   );
 }
