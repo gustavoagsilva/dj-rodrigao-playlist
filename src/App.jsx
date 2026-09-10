@@ -1,11 +1,48 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BuscaMusica from "./components/BuscaMusica/BuscaMusica";
 import MinhaPlaylist from "./components/MinhaPlaylist/MinhaPlaylist";
 import "./App.css";
 
+const STORAGE_KEY = "dj-rodrigao:festa";
+
+function carregarFesta() {
+  const festaVazia = { playlist: [], name: "" };
+
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    if (!saved || typeof saved !== "object") return festaVazia;
+
+    return {
+      playlist: Array.isArray(saved.playlist)
+        ? saved.playlist.filter(
+            (music) =>
+              music &&
+              typeof music.trackId === "number" &&
+              typeof music.trackName === "string" &&
+              typeof music.artistName === "string",
+          )
+        : [],
+      name: typeof saved.name === "string" ? saved.name : "",
+    };
+  } catch (error) {
+    console.error("Não foi possível recuperar a festa salva.", error);
+    return festaVazia;
+  }
+}
+
 function App() {
-  const [festa, setFesta] = useState({ playlist: [], name: "" });
+  // A função recupera os dados antes da primeira renderização.
+  const [festa, setFesta] = useState(carregarFesta);
   const { playlist, name } = festa;
+
+  // Salva o nome e as músicas juntos sempre que a festa mudar.
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(festa));
+    } catch (error) {
+      console.error("Não foi possível salvar a festa neste navegador.", error);
+    }
+  }, [festa]);
 
   function setName(name) {
     setFesta((current) => ({ ...current, name }));
