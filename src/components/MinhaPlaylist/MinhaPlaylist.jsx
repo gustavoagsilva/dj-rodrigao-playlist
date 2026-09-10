@@ -1,5 +1,6 @@
 ﻿import "./MinhaPlaylist.css";
 import { useState } from "react";
+import BotaoEnviarWhatsApp from "../BotaoEnviarWhatsApp/BotaoEnviarWhatsApp";
 
 function MinhaPlaylist({ playlist, onRemove, name, setName }) {
   const [open, setOpen] = useState(false);
@@ -52,6 +53,9 @@ function MinhaPlaylist({ playlist, onRemove, name, setName }) {
               </button>
             </div>
           ))}
+        </div>
+        <div className="minha-playlist__rodape">
+          <BotaoEnviarWhatsApp playlist={playlist} name={name} />
         </div>
       </div>
     </div>
