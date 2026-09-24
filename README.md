@@ -61,7 +61,6 @@ docs/
   imagens/
 public/                         # Arquivos públicos, incluindo favicon
 src/
-  assets/                       # Imagens e SVGs locais
   components/
     BuscaMusica/                # Requisições, estados da busca e controle de áudio
     CardMusica/                 # Resultado com capa, prévia e ações
