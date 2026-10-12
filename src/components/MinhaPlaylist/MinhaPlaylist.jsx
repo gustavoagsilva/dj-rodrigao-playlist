@@ -2,7 +2,14 @@
 import { useState } from "react";
 import BotaoEnviarWhatsApp from "../BotaoEnviarWhatsApp/BotaoEnviarWhatsApp";
 
-function MinhaPlaylist({ playlist, onRemove, name, setName }) {
+function MinhaPlaylist({
+  playlist,
+  onRemove,
+  name,
+  setName,
+  erroSalvamento,
+  onTentarSalvar,
+}) {
   const [open, setOpen] = useState(false);
   return (
     <div className={`minha-playlist${open ? " minha-playlist--aberta" : ""}`}>
@@ -21,6 +28,17 @@ function MinhaPlaylist({ playlist, onRemove, name, setName }) {
           {open ? "Fechar Playlist" : "Ver Playlist"}
         </button>
       </div>
+      {erroSalvamento && (
+        <div className="minha-playlist__erro-salvamento">
+          <p role="alert">
+            Não foi possível salvar suas alterações neste navegador. Elas podem
+            ser perdidas ao sair ou recarregar a página.
+          </p>
+          <button type="button" onClick={onTentarSalvar}>
+            Tentar salvar novamente
+          </button>
+        </div>
+      )}
       <div id="conteudo-playlist" className="minha-playlist__conteudo">
         <input
           className="minha-playlist__nome-festa"

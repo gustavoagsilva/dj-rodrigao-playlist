@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import BuscaMusica from "./components/BuscaMusica/BuscaMusica";
 import MinhaPlaylist from "./components/MinhaPlaylist/MinhaPlaylist";
 import "./App.css";
@@ -33,37 +33,36 @@ function carregarFesta() {
 function App() {
   // A função recupera os dados antes da primeira renderização.
   const [festa, setFesta] = useState(carregarFesta);
+  const [erroSalvamento, setErroSalvamento] = useState(false);
   const { playlist, name } = festa;
 
-  // Salva o nome e as músicas juntos sempre que a festa mudar.
-  useEffect(() => {
+  // Atualiza a tela mesmo se o navegador não permitir salvar os dados.
+  function salvarFesta(proximaFesta) {
+    setFesta(proximaFesta);
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(festa));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(proximaFesta));
+      setErroSalvamento(false);
     } catch (error) {
+      setErroSalvamento(true);
       console.error("Não foi possível salvar a festa neste navegador.", error);
     }
-  }, [festa]);
+  }
 
   function setName(name) {
-    setFesta((current) => ({ ...current, name }));
+    salvarFesta({ ...festa, name });
   }
 
   function addInPlaylist(music) {
-    setFesta((current) => {
-      const exists = current.playlist.some(
-        (item) => item.trackId === music.trackId,
-      );
-      if (exists) return current;
-
-      return { ...current, playlist: [...current.playlist, music] };
-    });
+    const exists = playlist.some((item) => item.trackId === music.trackId);
+    if (exists) return;
+    salvarFesta({ ...festa, playlist: [...playlist, music] });
   }
 
   function removeFromPlayList(music) {
-    setFesta((current) => ({
-      ...current,
-      playlist: current.playlist.filter((item) => music.trackId !== item.trackId),
-    }));
+    salvarFesta({
+      ...festa,
+      playlist: playlist.filter((item) => music.trackId !== item.trackId),
+    });
   }
   return (
     <div className="app">
@@ -77,6 +76,8 @@ function App() {
         onRemove={removeFromPlayList}
         name={name}
         setName={setName}
+        erroSalvamento={erroSalvamento}
+        onTentarSalvar={() => salvarFesta(festa)}
       />
     </div>
   );

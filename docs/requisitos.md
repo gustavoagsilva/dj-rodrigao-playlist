@@ -112,7 +112,7 @@ Chave local: `dj-rodrigao:festa`. A recuperação depende da mesma origem (proto
 | Música não encontrada | Aviso para tentar outro nome ou artista. |
 | Busca falha ou demora | Mensagem de erro ou timeout; permite buscar novamente. |
 | Prévia ausente ou falha | Aviso; adição e Spotify continuam disponíveis. |
-| Armazenamento bloqueado, cheio ou inválido | Exceções capturadas e dados inválidos tratados. Falhas registradas no console; não há aviso visual de salvamento. |
+| Armazenamento bloqueado, cheio ou inválido | Exceções capturadas e dados inválidos tratados. Falhas ao salvar exibem aviso e “Tentar salvar novamente”, preservando os dados em memória. O aviso desaparece após salvar com sucesso. Falhas na leitura inicial são registradas no console. |
 | Fechar sem enviar | Recupera nome e músicas se o armazenamento local estiver disponível. |
 | Acessar outra origem/aparelho | Não recupera automaticamente a seleção na v1. |
 | Playlist muito longa | Sem limite no produto. Avaliação do tamanho do link/mensagem nos serviços reais ainda pendente. |

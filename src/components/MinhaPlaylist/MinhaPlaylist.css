@@ -13,7 +13,33 @@
   overflow: hidden;
 }
 
-/* Resumo (estado fechado) */
+/* Aviso visível mesmo quando a playlist estiver fechada. */
+.minha-playlist__erro-salvamento {
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 8px 20px;
+  border-block: 1px solid var(--cor-destaque);
+  font-size: 13px;
+}
+
+.minha-playlist__erro-salvamento p {
+  margin: 0 0 8px;
+}
+
+.minha-playlist__erro-salvamento button {
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid var(--cor-destaque);
+  border-radius: var(--radius-pequeno);
+  background: transparent;
+  color: var(--cor-destaque);
+  font: inherit;
+  cursor: pointer;
+}
+
+/* Resumo e controle de abertura. */
 .minha-playlist__resumo {
   display: flex;
   align-items: center;

@@ -87,7 +87,7 @@ O botão do WhatsApp abre uma mensagem preparada, sem enviar automaticamente e s
 - Testes locais no Edge cobriram busca, áudio, persistência, mensagem do WhatsApp e diferentes larguras/alturas.
 - Os testes usaram respostas simuladas, áudio de teste e interceptação do WhatsApp; nenhuma mensagem foi enviada. Os scripts estão fora do repositório, e não há comando `npm test` configurado.
 - Falta validar o fluxo com serviços reais, Chrome/Android e Safari/iPhone, incluindo teclado virtual, e publicar uma URL estável.
-- Prévias dependem do catálogo. Falhas no salvamento local são capturadas e registradas no console, mas ainda não aparecem em um aviso na interface.
+- Prévias dependem do catálogo. Falhas no salvamento local exibem um aviso na playlist e a opção “Tentar salvar novamente”. A seleção permanece em memória; o aviso desaparece quando o salvamento volta a funcionar. Falhas na leitura inicial continuam registradas no console.
 - “Continuar em outro aparelho” ficou para uma versão futura, com armazenamento online e link exclusivo da festa.
 
 Consulte os [requisitos, decisões e pendências da v1](docs/requisitos.md).
