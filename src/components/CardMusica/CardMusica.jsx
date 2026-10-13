@@ -1,15 +1,27 @@
 import "./CardMusica.css";
 import { useState } from "react";
 
-function CardMusica({ music, added, onAdd, onPlay }) {
+function CardMusica({ music, added, onAdd, onPlay, limiteAtingido }) {
   const [audioError, setAudioError] = useState(false);
+  const [usarCapaOriginal, setUsarCapaOriginal] = useState(false);
+  // Solicita uma imagem maior ao iTunes para evitar ampliar a miniatura.
+  const capaOriginal = music.artworkUrl100;
+  const capaMaior = capaOriginal?.replace(
+    /\/100x100([a-z]*\.[a-z]+)(?=\?|$)/i,
+    "/600x600$1",
+  );
 
   return (
     <div className="card-musica">
       <img
         className="card-musica__capa"
-        src={music.artworkUrl100}
+        src={usarCapaOriginal ? capaOriginal : capaMaior}
         alt={`Capa de ${music.trackName}`}
+        onError={() => {
+          if (!usarCapaOriginal && capaMaior !== capaOriginal) {
+            setUsarCapaOriginal(true);
+          }
+        }}
       />
       <div className="card-musica__info">
         <p className="card-musica__titulo">{music.trackName}</p>
@@ -49,9 +61,14 @@ function CardMusica({ music, added, onAdd, onPlay }) {
       <button
         className="card-musica__botao-adicionar"
         type="button"
+        disabled={added || limiteAtingido}
         onClick={() => onAdd(music)}
       >
-        {added ? "Música já adicionada" : "Adicionar"}
+        {added
+          ? "Música já adicionada"
+          : limiteAtingido
+            ? "Limite atingido"
+            : "Adicionar"}
       </button>
     </div>
   );

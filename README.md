@@ -10,7 +10,7 @@ Projeto destinado ao trabalho real do DJ e ao portfólio do desenvolvedor. A v1 
 - Cancelamento de buscas anteriores e limite de espera de 20 segundos.
 - Prévias de até 30 segundos, quando disponíveis, com apenas uma tocando por vez.
 - Link para pesquisar a música e o artista no Spotify.
-- Adição e remoção de músicas, evitando duplicatas pelo `trackId`.
+- Adição e remoção de até 100 músicas por festa, evitando duplicatas pelo `trackId`. Ao atingir o limite, um aviso orienta a remover uma música para adicionar outra; busca, prévias e WhatsApp continuam disponíveis.
 - Nome opcional da festa e salvamento automático no navegador.
 - Mensagem numerada para o WhatsApp, confirmada manualmente pelo contratante.
 - Barra expansível nas telas menores e playlist ao lado da busca a partir de 1024 px.

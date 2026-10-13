@@ -16,7 +16,7 @@ Persona de referência: Mariana, 29 anos, organizando um aniversário. Acessa pr
 | --- | --- | --- |
 | RF01 | Buscar músicas por nome e/ou artista usando o iTunes. | Implementado. |
 | RF02 | Mostrar capa, título, artista e prévia de até 30 segundos quando disponível. Ao iniciar outra prévia, pausar a anterior; informar indisponibilidade ou erro. | Implementado; validar catálogo e reprodução em dispositivos reais. |
-| RF03 | Adicionar músicas, impedindo repetição do mesmo `trackId`. | Implementado. |
+| RF03 | Adicionar até 100 músicas por festa, impedindo repetição do mesmo `trackId`. Ao atingir o limite, avisar e bloquear novas adições até remover uma música. | Implementado. |
 | RF04 | Remover músicas adicionadas. | Implementado; remoções também são persistidas. |
 | RF05 | Mostrar a seleção em seção própria: barra inferior expansível nas telas menores e painel aberto à direita a partir de 1024 px. | Implementado. |
 | RF06 | Preparar mensagem para o WhatsApp com lista numerada de músicas/artistas e nome opcional. Confirmação manual; preservar a seleção ao abrir o link. | Implementado; entrega real pendente de validação. |
@@ -25,7 +25,7 @@ Persona de referência: Mariana, 29 anos, organizando um aniversário. Acessa pr
 | RF09 | Permitir nomear a festa opcionalmente. | Implementado, incluindo persistência e mensagem. |
 | RF10 | Mostrar “Abrir no Spotify” nos resultados, pesquisando título e artista. O site não exige autenticação do Spotify. | Implementado; o destino é controlado pelo Spotify. |
 
-Não há limite de músicas definido pelo produto, ordem de preferência ou dados obrigatórios da festa. A ordem atual é a de adição; não existe reordenação manual. Registros distintos do iTunes podem ter nomes iguais e identificadores diferentes.
+O limite é de 100 músicas por festa, pois a seleção do contratante complementa o repertório do DJ. Busca, prévias e envio pelo WhatsApp continuam disponíveis ao atingir esse limite. Não há ordem de preferência ou dados obrigatórios da festa. A ordem atual é a de adição; não existe reordenação manual. Registros distintos do iTunes podem ter nomes iguais e identificadores diferentes.
 
 ## 3. Requisitos não funcionais
 
@@ -115,7 +115,7 @@ Chave local: `dj-rodrigao:festa`. A recuperação depende da mesma origem (proto
 | Armazenamento bloqueado, cheio ou inválido | Exceções capturadas e dados inválidos tratados. Falhas ao salvar exibem aviso e “Tentar salvar novamente”, preservando os dados em memória. O aviso desaparece após salvar com sucesso. Falhas na leitura inicial são registradas no console. |
 | Fechar sem enviar | Recupera nome e músicas se o armazenamento local estiver disponível. |
 | Acessar outra origem/aparelho | Não recupera automaticamente a seleção na v1. |
-| Playlist muito longa | Sem limite no produto. Avaliação do tamanho do link/mensagem nos serviços reais ainda pendente. |
+| Playlist muito longa | Limite de 100 músicas por festa. A página de preparação do WhatsApp exibiu a mensagem completa no teste com 100 músicas fictícias no Chrome; envio e recebimento não foram testados. O tamanho do link depende também dos títulos e artistas. |
 | Serviços externos ou futura hospedagem indisponíveis | Validar disponibilidade e fluxo antes do uso com clientes reais. |
 
 ## 9. Validação e próximos passos

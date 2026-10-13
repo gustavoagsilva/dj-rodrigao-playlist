@@ -2,7 +2,8 @@
 import CardMusica from "../CardMusica/CardMusica";
 import { useEffect, useRef, useState } from "react";
 
-function BuscaMusica({ playlist, onAdd }) {
+function BuscaMusica({ playlist, onAdd, limiteMusicas }) {
+  const limiteAtingido = playlist.length >= limiteMusicas;
   const [inputText, setInputText] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -101,6 +102,11 @@ function BuscaMusica({ playlist, onAdd }) {
         </button>
       </form>
       <p className="busca-musica__status" role="status" aria-live="polite">
+        {limiteAtingido
+          ? `Você atingiu o limite de ${limiteMusicas} músicas. Remova uma para adicionar outra.`
+          : `Escolha até ${limiteMusicas} músicas para sua festa.`}
+      </p>
+      <p className="busca-musica__status" role="status" aria-live="polite">
         {isLoading ? "Buscando..." : status}
       </p>
       <div className="busca-musica__resultados" aria-busy={isLoading}>
@@ -109,6 +115,7 @@ function BuscaMusica({ playlist, onAdd }) {
             key={music.trackId}
             music={music}
             added={playlist.some((item) => item.trackId === music.trackId)}
+            limiteAtingido={limiteAtingido}
             onAdd={onAdd}
             onPlay={tocarPrevia}
           />

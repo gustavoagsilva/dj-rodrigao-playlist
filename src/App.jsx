@@ -4,6 +4,7 @@ import MinhaPlaylist from "./components/MinhaPlaylist/MinhaPlaylist";
 import "./App.css";
 
 const STORAGE_KEY = "dj-rodrigao:festa";
+const LIMITE_MUSICAS = 100;
 
 function carregarFesta() {
   const festaVazia = { playlist: [], name: "" };
@@ -53,6 +54,7 @@ function App() {
   }
 
   function addInPlaylist(music) {
+    if (playlist.length >= LIMITE_MUSICAS) return;
     const exists = playlist.some((item) => item.trackId === music.trackId);
     if (exists) return;
     salvarFesta({ ...festa, playlist: [...playlist, music] });
@@ -70,7 +72,11 @@ function App() {
         <h1 className="app__titulo">Dj Rodrigão</h1>
         <p className="app__subtitulo">Monte a playlist da sua festa</p>
       </header>
-      <BuscaMusica playlist={playlist} onAdd={addInPlaylist} />
+      <BuscaMusica
+        playlist={playlist}
+        onAdd={addInPlaylist}
+        limiteMusicas={LIMITE_MUSICAS}
+      />
       <MinhaPlaylist
         playlist={playlist}
         onRemove={removeFromPlayList}
