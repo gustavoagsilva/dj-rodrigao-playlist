@@ -1,5 +1,5 @@
 ﻿import "./MinhaPlaylist.css";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import BotaoEnviarWhatsApp from "../BotaoEnviarWhatsApp/BotaoEnviarWhatsApp";
 
 function MinhaPlaylist({
@@ -11,8 +11,32 @@ function MinhaPlaylist({
   onTentarSalvar,
 }) {
   const [open, setOpen] = useState(false);
+  const painelRef = useRef(null);
+
+  useEffect(() => {
+    const painel = painelRef.current;
+    const app = painel.closest(".app");
+    // A barra muda de altura com o aviso, a abertura e a largura da tela.
+    const atualizarEspaco = () => {
+      app.style.setProperty(
+        "--altura-playlist",
+        `${painel.getBoundingClientRect().height}px`,
+      );
+    };
+    atualizarEspaco();
+    const observer = new ResizeObserver(atualizarEspaco);
+    observer.observe(painel);
+    return () => {
+      observer.disconnect();
+      app.style.removeProperty("--altura-playlist");
+    };
+  }, []);
+
   return (
-    <div className={`minha-playlist${open ? " minha-playlist--aberta" : ""}`}>
+    <div
+      ref={painelRef}
+      className={`minha-playlist${open ? " minha-playlist--aberta" : ""}${erroSalvamento ? " minha-playlist--erro" : ""}`}
+    >
       <div className="minha-playlist__resumo">
         <p>
           {playlist.length} música{playlist.length !== 1 ? "s" : ""} adicionada

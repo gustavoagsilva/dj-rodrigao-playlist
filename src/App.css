@@ -40,8 +40,8 @@
 
 @media (max-width: 1023px) {
   .app {
-    /* Espaço para a barra fechada, mesmo com os controles em duas linhas. */
-    padding-bottom: calc(140px + env(safe-area-inset-bottom, 0px));
+    /* A altura medida já inclui o aviso e a área segura do aparelho. */
+    padding-bottom: calc(var(--altura-playlist, 140px) + 16px);
   }
 }
 

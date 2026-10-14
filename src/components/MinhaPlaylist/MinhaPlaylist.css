@@ -188,6 +188,36 @@
   .remover-musica__botao-remover {
     min-height: 44px;
   }
+
+  /* Com o aviso, todo o painel pode rolar: a lista nunca é esmagada. */
+  .minha-playlist--erro {
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+  }
+
+  .minha-playlist--erro .minha-playlist__resumo {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: var(--cor-fundo-elevado);
+  }
+
+  .minha-playlist--erro.minha-playlist--aberta .minha-playlist__conteudo {
+    display: block;
+    flex-shrink: 0;
+    overflow: visible;
+  }
+
+  .minha-playlist--erro .minha-playlist__musicas {
+    overflow: visible;
+  }
+
+  .minha-playlist--erro .minha-playlist__rodape {
+    position: sticky;
+    bottom: 0;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    background: var(--cor-fundo-elevado);
+  }
 }
 
 /* Mais espaço para a lista quando a altura disponível for pequena. */
