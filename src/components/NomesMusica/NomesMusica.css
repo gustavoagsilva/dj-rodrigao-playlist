@@ -1,0 +1,40 @@
+.nomes-musica {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding: 2px 16px 2px 0;
+  border: 0;
+  border-radius: var(--radius-pequeno);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.nomes-musica .card-musica__titulo,
+.nomes-musica .card-musica__artista {
+  display: block;
+}
+
+.nomes-musica--expandido .card-musica__titulo,
+.nomes-musica--expandido .card-musica__artista {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  overflow: visible;
+  text-overflow: clip;
+}
+
+.nomes-musica__seta {
+  position: absolute;
+  top: 4px;
+  right: 0;
+  color: var(--cor-destaque);
+}
+
+.nomes-musica:focus-visible {
+  outline: 2px solid var(--cor-destaque);
+  outline-offset: 2px;
+}

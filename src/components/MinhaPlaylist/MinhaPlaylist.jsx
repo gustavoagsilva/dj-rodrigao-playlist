@@ -1,6 +1,7 @@
 ﻿import "./MinhaPlaylist.css";
 import { useEffect, useRef, useState } from "react";
 import BotaoEnviarWhatsApp from "../BotaoEnviarWhatsApp/BotaoEnviarWhatsApp";
+import NomesMusica from "../NomesMusica/NomesMusica";
 
 function MinhaPlaylist({
   playlist,
@@ -82,8 +83,7 @@ function MinhaPlaylist({
               />
 
               <div className="card-musica__info">
-                <p className="card-musica__titulo">{music.trackName}</p>
-                <p className="card-musica__artista">{music.artistName}</p>
+                <NomesMusica titulo={music.trackName} artista={music.artistName} />
               </div>
 
               <button

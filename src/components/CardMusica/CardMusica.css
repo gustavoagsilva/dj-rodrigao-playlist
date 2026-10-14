@@ -64,11 +64,21 @@
   color: var(--cor-destaque);
   text-decoration: none;
   margin-top: 6px;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 8px 4px;
+  max-width: 100%;
+  border-radius: var(--radius-pequeno);
 }
 
 .card-musica__spotify:hover {
   text-decoration: underline;
+}
+
+.card-musica__spotify:focus-visible {
+  outline: 2px solid var(--cor-destaque);
+  outline-offset: 2px;
 }
 
 .card-musica__botao-adicionar {

@@ -1,5 +1,6 @@
 import "./CardMusica.css";
 import { useState } from "react";
+import NomesMusica from "../NomesMusica/NomesMusica";
 
 function CardMusica({ music, added, onAdd, onPlay, limiteAtingido }) {
   const [audioError, setAudioError] = useState(false);
@@ -24,8 +25,7 @@ function CardMusica({ music, added, onAdd, onPlay, limiteAtingido }) {
         }}
       />
       <div className="card-musica__info">
-        <p className="card-musica__titulo">{music.trackName}</p>
-        <p className="card-musica__artista">{music.artistName}</p>
+        <NomesMusica titulo={music.trackName} artista={music.artistName} />
         <a
           className="card-musica__spotify"
           href={`https://open.spotify.com/search/${encodeURIComponent(music.trackName + " " + music.artistName)}`}
